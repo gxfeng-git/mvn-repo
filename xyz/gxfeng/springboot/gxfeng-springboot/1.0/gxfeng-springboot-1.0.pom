@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.5.RELEASE</version>
+        <relativePath></relativePath>
+    </parent>
+
+    <groupId>xyz.gxfeng.springboot</groupId>
+    <artifactId>gxfeng-springboot</artifactId>
+    <version>1.0</version>
+    <packaging>pom</packaging>
+    <name>${project.artifactId}</name>
+    <description>gxfeng_springboot框架</description>
+
+    <distributionManagement>
+        <repository>
+            <id>github-mvn-releases</id>
+            <name>github-mvn-repo</name>
+            <url>file:://${project.build.directory}/mvn-repo</url>
+        </repository>
+        <snapshotRepository>
+            <id>github-mvn-snapshots</id>
+            <name>github-mvn-repo</name>
+            <url>file:://${project.build.directory}/mvn-repo</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>github-mvn</id>
+            <url>https://raw.githubusercontent.com/gxfeng-git/mvn-repo/master/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>github-mvn</id>
+            <url>https://raw.githubusercontent.com/gxfeng-git/mvn-repo/master/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <build>
+        <directory>./target</directory>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+                <configuration>
+                    <altDeploymentRepository>
+                        internal.repo::default::file://${project.build.directory}/mvn-repo
+                    </altDeploymentRepository>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.github</groupId>
+                <artifactId>site-maven-plugin</artifactId>
+                <version>0.12</version>
+                <configuration>
+                    <!-- The commit message -->
+                    <message>Maven artifacts for ${project.artifactId}:${project.version}</message>
+                    <noJekyll>true</noJekyll>
+                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+                    <!-- The commit branch -->
+                    <branch>refs/heads/master</branch>
+                    <!-- Use merge or override the content -->
+                    <merge>true</merge>
+<!--                    <includes>-->
+<!--                        <include>**/*</include>-->
+<!--                    </includes>-->
+                    <repositoryName>mvn-repo</repositoryName>
+                    <repositoryOwner>gxfeng-git</repositoryOwner>
+                    <server>github-mvn</server>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>deploy</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
