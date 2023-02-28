@@ -194,7 +194,7 @@
                     <!-- The commit branch -->
                     <branch>refs/heads/master</branch>
                     <!-- Use merge or override the content -->
-                    <merge>true</merge>
+                    <merge>false</merge>
                     <repositoryName>mvn-repo</repositoryName>
                     <repositoryOwner>gxfeng-git</repositoryOwner>
                     <server>github-mvn</server>
